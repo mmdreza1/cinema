@@ -10,12 +10,12 @@ FILE *admins;
 class user{
     public:
         string username;
-        ll password;
+        string password;
 };
 class admin{
     public:
         string username;
-        ll password;
+        string password;
 };
 
 int main(){
@@ -32,32 +32,34 @@ int main(){
             users = fopen("F:\\Cinema Project\\Users.txt","r");
         }
         else if ( cmd1 == "No"){
-            users = fopen("F:\\Cinema Project\\Users.txt","a+");
-
-            int cnt=0;
-            if( users != NULL){
-                while ( !feof(users)){
-                    cnt++;
-                    if( feof(users))break;
-                }
-            }
-            // seeing if the username was already registered or not
-
-            if (users != NULL){
-                string compare[cnt];
-                while ( !feof(users)){
-                    fscanf(users,"%s",username);
-                    if( feof(users))break;
-                }
-            }
-
+            char username[1000];
+            char password[1000];
             user ob;
-            cout << "Enter your username" << endl;
-            cin >> ob.username;
-            for (int i=0; i<cnt; i++){
+            users = fopen("F:\\Cinema Project\\Users.txt","a+");
+            bool flag = false;
 
-                if( )
-            }
+            do {
+
+                cout << "Enter your username" << endl;
+                cin >> ob.username;
+                // checking if the username was already registered or not
+                if (users != NULL){
+                    while ( !feof(users)){
+                        fscanf(users,"%s",username);
+                        if( ob.username == username ){
+                            flag = true;
+                            cout << " this username has been already registered." << "      " << "Try again" << endl;
+                            break;
+                        }
+                        if( feof(users))break;
+                    }
+                }
+            } while( flag == true);
+            cout << "Enter a password" << endl;
+            cin >> ob.password;
+            strcpy(username, ob.username.c_str());
+            strcpy( password, ob.password.c_str());
+            fprintf(users,"%s\n%s\n",username,password);
         }
     }
 }
