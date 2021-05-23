@@ -24,12 +24,33 @@ int main(){
     cout << "Either type 'user' or type 'admin'" << endl;
     string cmd0;
     cin >> cmd0;
+
     if ( cmd0 == "user"){
         cout << "Already have an account ?" << endl << "Yes" << endl << "No" << endl;
         string cmd1;
         cin >> cmd1;
         if ( cmd1 == "Yes"){
+            user ob1;
+            char user1name[1000];
+            char pass1word[1000];
+            bool flag2 = true;
             users = fopen("F:\\Cinema Project\\Users.txt","r");
+
+            do {
+                cout << "Enter your previously registered username." << endl;
+                cin >> ob1.username;
+                cout << "Enter your password" << endl;
+                cin >> ob1.password;
+                while( !feof(users)){
+                    fscanf(users, "%s%s", user1name, pass1word);
+                    if (ob1.username == user1name && ob1.password == pass1word){
+                        cout << "Entry Granted" << endl;
+                        flag2 = false;
+                        break;
+                    }
+                    if( feof(users))break;
+                }
+            } while( flag2 == true );
         }
         else if ( cmd1 == "No"){
             char username[1000];
@@ -60,6 +81,7 @@ int main(){
             strcpy(username, ob.username.c_str());
             strcpy( password, ob.password.c_str());
             fprintf(users,"%s\n%s\n",username,password);
+            fclose(users);
         }
     }
 }
