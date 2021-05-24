@@ -6,7 +6,8 @@ using namespace std;
 typedef long long ll ;
 FILE *users;
 FILE *admins;
-
+bool Entryforadmin = false;
+bool Entryforuser = false;
 class user{
     public:
         string username;
@@ -17,6 +18,74 @@ class admin{
         string username;
         string password;
 };
+
+void adminEntry(){
+    cout << "Already have an account ?" << endl << "Yes" << endl << "No" << endl;
+    string cmd1;
+    cin >> cmd1;
+    if ( cmd1 == "Yes"){
+        user ob1;
+        char user1name[1000];
+        char pass1word[1000];
+        bool flag2 = true;
+        admins = fopen("F:\\Cinema Project\\Admins.txt","r");
+
+        do {
+            cout << "Enter your previously registered username." << endl;
+            cin >> ob1.username;
+            cout << "Enter your password" << endl;
+            cin >> ob1.password;
+            while( !feof(admins)){
+                fscanf(admins, "%s%s", user1name, pass1word);
+                if (ob1.username == user1name && ob1.password == pass1word){
+                    cout << "Entry Granted" << endl;
+                    Entryforadmin = true;
+                    fclose(admins);
+                    flag2 = false;
+                    break;
+                }
+                if( feof(admins))break;
+            }
+        } while( flag2 == true );
+    }
+    else if ( cmd1 == "No"){
+        char username[1000];
+        char password[1000];
+        user ob;
+        bool flag = false;
+
+        do {
+            admins = fopen("F:\\Cinema Project\\Admins.txt","a+");
+            cout << "Enter your username" << endl;
+            cin >> ob.username;
+            // checking if the username was already registered or not
+            if (admins != NULL){
+                while ( !feof(admins)){
+                    fscanf(admins,"%s",username);
+                    if( ob.username == username ){
+                        flag = true;
+                        cout << "this username has been already registered." << "      " << "Try again" << endl;
+                        break;
+                    }
+                    if( feof(admins) && ob.username != username){
+                        flag = false;
+                        fclose(admins);
+                        break;
+                    }
+                }
+                fclose(admins);
+            }
+        } while( flag == true);
+        cout << "Enter a password" << endl;
+        cin >> ob.password;
+        strcpy(username, ob.username.c_str());
+        strcpy( password, ob.password.c_str());
+        admins = fopen("F:\\Cinema Project\\Admins.txt","a+");
+        fprintf(admins,"%s\n%s\n",username,password);
+        cout << "Your registration is complete." << "       " << "Please re-enter the program " << endl;
+        fclose(admins);
+    }
+}
 
 int main(){
     cout << endl << "           " << "Welcome to MovieTown" << endl;
@@ -45,6 +114,8 @@ int main(){
                     fscanf(users, "%s%s", user1name, pass1word);
                     if (ob1.username == user1name && ob1.password == pass1word){
                         cout << "Entry Granted" << endl;
+                        Entryforuser = true;
+                        fclose(users);
                         flag2 = false;
                         break;
                     }
@@ -55,12 +126,11 @@ int main(){
         else if ( cmd1 == "No"){
             char username[1000];
             char password[1000];
-            user ob;
-            users = fopen("F:\\Cinema Project\\Users.txt","a+");
+            user ob;         
             bool flag = false;
 
             do {
-
+                users = fopen("F:\\Cinema Project\\Users.txt","a+");
                 cout << "Enter your username" << endl;
                 cin >> ob.username;
                 // checking if the username was already registered or not
@@ -69,19 +139,35 @@ int main(){
                         fscanf(users,"%s",username);
                         if( ob.username == username ){
                             flag = true;
-                            cout << " this username has been already registered." << "      " << "Try again" << endl;
+                            cout << "this username has been already registered." << "      " << "Try again" << endl;
                             break;
                         }
-                        if( feof(users))break;
+                        if( feof(users) && ob.username != username){
+                            flag = false;
+                            fclose(users);
+                            break;
+                        }
                     }
+                    fclose(users);
                 }
             } while( flag == true);
             cout << "Enter a password" << endl;
             cin >> ob.password;
             strcpy(username, ob.username.c_str());
             strcpy( password, ob.password.c_str());
+            users = fopen("F:\\Cinema Project\\Users.txt","a+");
             fprintf(users,"%s\n%s\n",username,password);
+            cout << "Your registration is complete." << "       " << "Please re-enter the program " << endl;
             fclose(users);
         }
+    }
+    if ( cmd0 == "admin"){
+        adminEntry();
+    }
+    if ( Entryforadmin == true){
+
+    }
+    if ( Entryforuser == true){
+
     }
 }
