@@ -28,9 +28,10 @@ void adminEntry(){
         char user1name[1000];
         char pass1word[1000];
         bool flag2 = true;
-        admins = fopen("F:\\Cinema Project\\Admins.txt","r");
+
 
         do {
+            admins = fopen("F:\\Cinema Project\\Admins.txt","r");
             cout << "Enter your previously registered username." << endl;
             cin >> ob1.username;
             cout << "Enter your password" << endl;
@@ -44,7 +45,10 @@ void adminEntry(){
                     flag2 = false;
                     break;
                 }
-                if( feof(admins))break;
+                if( feof(admins)){
+                    fclose(admins);
+                    break;
+                }
             }
         } while( flag2 == true );
     }
@@ -103,9 +107,10 @@ int main(){
             char user1name[1000];
             char pass1word[1000];
             bool flag2 = true;
-            users = fopen("F:\\Cinema Project\\Users.txt","r");
+
 
             do {
+                users = fopen("F:\\Cinema Project\\Users.txt","r");
                 cout << "Enter your previously registered username." << endl;
                 cin >> ob1.username;
                 cout << "Enter your password" << endl;
@@ -119,7 +124,10 @@ int main(){
                         flag2 = false;
                         break;
                     }
-                    if( feof(users))break;
+                    if( feof(users)){
+                        fclose(users);
+                        break;
+                    }
                 }
             } while( flag2 == true );
         }
@@ -165,9 +173,22 @@ int main(){
         adminEntry();
     }
     if ( Entryforadmin == true){
-
+        cout << "choose " << endl << endl;
+        cout << "1. Add a new movie" << endl;
+        cout << "2. Remove a movie" << endl;
+        cout << "3. Edit a movie" << endl;
+        cout << "4. Display all movies" << endl;
+        cout << "5. Categorization" << endl;
+        cout << "6. Smart Search (SS)" << endl;
+        cout << "7. Group Sreach" << endl;
+        cout << "8. Display all movies of the same group" << endl;
     }
     if ( Entryforuser == true){
-
+        cout << "choose " << endl << endl;
+        cout << "1. Display all movies" << endl;
+        cout << "2. Smart Search (SS)" << endl;
+        cout << "3. Group Sreach" << endl;
+        cout << "4. Display all movies of the same group" << endl;
+        cout << "5. Reserve" << endl;
     }
 }
