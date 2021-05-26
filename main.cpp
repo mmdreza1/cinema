@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 #include<QMap>
-#include<QList>
+#include<QSet>
+#include<QVector>
 using namespace std;
 
 typedef long long ll ;
@@ -20,7 +21,36 @@ class admin{
 };
 
 void Addmovie(){
-
+    FILE *ptr;
+    char name[1000];
+    cout << "Enter the name of the movie" << endl;
+    gets(name);
+    char s[100] ="F:\\Cinema Project\\movies\\";
+    strcat(s,name);
+    strcat(s,".txt");
+    ptr = fopen(s,"a");
+    fprintf(ptr,"%s\n",name);
+    char genre[1000];
+    cout << "Please specify which group(genre) this movie belongs to" << endl;
+    gets(genre);
+    fprintf(ptr, "%s\n",genre);
+    char director[1000];
+    cout << "Please enter the name of the director" << endl;
+    gets(director);
+    fprintf(ptr,"%s\n",director);
+    char firstAct[1000];
+    char secondAct[1000];
+    char thirdAct[1000];
+    cout << "Please enter the name of the leading actor/actress of the movie" << endl;
+    gets(firstAct);
+    fprintf(ptr, "%s\n",firstAct);
+    cout << "Please enter the name of the second main actor/actress of the movie" << endl;
+    gets(secondAct);
+    fprintf(ptr,"%s\n",secondAct);
+    cout << "Please enter the name of the third main actor/actress of the movie" << endl;
+    gets(thirdAct);
+    fprintf(ptr,"%s\n",thirdAct);
+    fclose(ptr);
 }
 
 void adminEntry(){
@@ -93,6 +123,29 @@ void adminEntry(){
         cout << "Your registration is complete." << "       " << "Please re-enter the program " << endl;
         fclose(admins);
     }
+}
+
+void choicesForAdmin(){
+    int cmd;
+    cout << "choose " << endl << endl;
+    cout << "1. Add a new movie" << endl;
+    cout << "2. Remove a movie" << endl;
+    cout << "3. Edit a movie" << endl;
+    cout << "4. Display all movies" << endl;
+                                              //      cout << "5. Categorization" << endl;
+    cout << "5. Smart Search (SS)" << endl;
+    cout << "6. Group Sreach" << endl;
+    cout << "7. Display all movies of the same group" << endl;
+    cout << "8. Exit" << endl;
+    cin  >> cmd;
+    if( cmd == 1){
+        cin.ignore();
+        Addmovie();
+        choicesForAdmin();
+    }
+
+    if ( cmd == 8)return;
+
 }
 
 int main(){
@@ -177,20 +230,7 @@ int main(){
         adminEntry();
     }
     if ( Entryforadmin == true){
-        int cmd;
-        cout << "choose " << endl << endl;
-        cout << "1. Add a new movie" << endl;
-        cout << "2. Remove a movie" << endl;
-        cout << "3. Edit a movie" << endl;
-        cout << "4. Display all movies" << endl;
-        cout << "5. Categorization" << endl;
-        cout << "6. Smart Search (SS)" << endl;
-        cout << "7. Group Sreach" << endl;
-        cout << "8. Display all movies of the same group" << endl;
-        cin  >> cmd;
-        if( cmd == 1){
-            Addmovie();
-        }
+        choicesForAdmin();
     }
     if ( Entryforuser == true){
         int cmd;
@@ -200,6 +240,7 @@ int main(){
         cout << "3. Group Sreach" << endl;
         cout << "4. Display all movies of the same group" << endl;
         cout << "5. Reserve" << endl;
+        cout << "6. Exit" << endl;
         cin >> cmd;
     }
 }
