@@ -53,6 +53,20 @@ void Addmovie(){
     fclose(ptr);
 }
 
+void Removemovie(){
+    char name[1000];
+    cout << "Enter the name of the movie which you want to delete" << endl;
+    gets(name);
+    char s[1000] = "F:\\Cinema Project\\movies\\";
+    strcat(s,name);
+    strcat(s,".txt");
+    cout << s << endl;
+    int status;
+    status = remove(s);
+    if( status == 0)cout << "Movie was successfuly removed from the list " << endl;
+    else if ( status != 0)cout << "No movie matches your given movie name!!" << endl;
+}
+
 void adminEntry(){
     cout << "Already have an account ?" << endl << "Yes" << endl << "No" << endl;
     string cmd1;
@@ -141,6 +155,11 @@ void choicesForAdmin(){
     if( cmd == 1){
         cin.ignore();
         Addmovie();
+        choicesForAdmin();
+    }
+    if ( cmd == 2){
+        cin.ignore();
+        Removemovie();
         choicesForAdmin();
     }
 
