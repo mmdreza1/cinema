@@ -19,6 +19,15 @@ class admin{
         string username;
         string password;
 };
+class movie{
+    public:
+        char name[1000];
+        char genre[1000];
+        char director[1000];
+        char firstAct[1000];
+        char secondAct[1000];
+        char thirdAct[1000];
+};
 
 void Addmovie(){
     FILE *ptr;
@@ -51,19 +60,55 @@ void Addmovie(){
     gets(thirdAct);
     fprintf(ptr,"%s\n",thirdAct);
     fclose(ptr);
+    movie ob;
+    strcpy(ob.name, name);
+    strcpy(ob.director, director);
+    strcpy(ob.firstAct, firstAct);
+    strcpy(ob.secondAct, secondAct);
+    strcpy(ob.thirdAct, thirdAct);
+    ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "a");
+    fprintf(ptr, "%s\n", ob.name);
+    fclose(ptr);
 }
 
 void Removemovie(){
-    char name[1000];
-    cout << "Enter the name of the movie which you want to delete" << endl;
-    gets(name);
-    char s[1000] = "F:\\Cinema Project\\movies\\";
-    strcat(s,name);
-    strcat(s,".txt");
-    int status;
-    status = remove(s);
-    if( status == 0)cout << "Movie was successfuly removed from the list " << endl;
-    else if ( status != 0)cout << "No movie matches your given movie name!!" << endl;
+    int st;
+    do{
+        char name[1000];
+        cout << "Enter the name of the movie which you want to delete" << endl;
+        gets(name);
+        char s[1000] = "F:\\Cinema Project\\movies\\";
+        strcat(s,name);
+        strcat(s,".txt");
+        int status;
+        status = remove(s);
+        st = status;
+        if( status == 0){
+            FILE *ptr;
+            char nam[1000];
+            ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "r");
+            int size = 0;
+            while( !feof(ptr)){
+                fscanf(ptr, " %[^\n]s", nam);
+                size++;
+                if(feof(ptr))break;
+            }
+            fclose(ptr);
+            char names[size][1000];
+            ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "r");
+            for ( int i=0; i<size; i++){
+                fscanf(ptr, " %[^\n]s", names[i]);
+            }
+            fclose(ptr);
+            ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "w");
+            for ( int i =0; i < size; i++){
+                if ( strcmp(names[i], name) != 0){
+                    fprintf(ptr, "%s\n", names[i]);
+                }
+            } fclose(ptr);
+        }
+        else if ( status != 0)cout << "No movie matches your given movie name!!  Please try again" << endl;
+    }while ( st != 0);
 }
 
 void EditMovie(){
@@ -83,6 +128,18 @@ void EditMovie(){
     }while (  st != 0);
     cout << "Now please enter the changed information" << endl;
     Addmovie();
+}
+
+void DisplayAllMovies(){
+    char name[1000];
+    FILE * ptr;
+    ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "r");
+    while ( ! feof(ptr)){
+        fscanf(ptr, " %[^\n]s", name);
+        if (feof(ptr))break;
+        cout << name << endl;
+    }
+    fclose(ptr);
 }
 
 void adminEntry(){
@@ -164,7 +221,6 @@ void choicesForAdmin(){
     cout << "2. Remove a movie" << endl;
     cout << "3. Edit a movie" << endl;
     cout << "4. Display all movies" << endl;
-                                              //      cout << "5. Categorization" << endl;
     cout << "5. Smart Search (SS)" << endl;
     cout << "6. Group Sreach" << endl;
     cout << "7. Display all movies of the same group" << endl;
@@ -184,6 +240,13 @@ void choicesForAdmin(){
         cin.ignore();
         EditMovie();
         choicesForAdmin();
+    }
+    if ( cmd == 4){
+        DisplayAllMovies();
+        choicesForAdmin();
+    }
+    if ( cmd == 7){
+
     }
     if ( cmd == 8)return;
 
