@@ -297,6 +297,29 @@ void choicesForAdmin(){
 
 }
 
+void choicesForUser(){
+    int cmd;
+    cout << "choose " << endl << endl;
+    cout << "1. Display all movies" << endl;
+    cout << "2. Smart Search (SS)" << endl;
+    cout << "3. Group Sreach" << endl;
+    cout << "4. Display all movies of the same group" << endl;
+    cout << "5. Reserve" << endl;
+    cout << "6. Exit" << endl;
+    cin >> cmd;
+    if( cmd == 1){
+        DisplayAllMovies();
+        choicesForUser();
+    }
+    if ( cmd == 4){
+        cin.ignore();
+        DisplayMoviesofSameGenre();
+        choicesForUser();
+    }
+
+    if ( cmd == 6)return;
+}
+
 int main(){
     cout << endl << "           " << "Welcome to MovieTown" << endl;
     cout << "Would you like to enter as an user or as an admin ?" << endl;
@@ -382,14 +405,6 @@ int main(){
         choicesForAdmin();
     }
     if ( Entryforuser == true){
-        int cmd;
-        cout << "choose " << endl << endl;
-        cout << "1. Display all movies" << endl;
-        cout << "2. Smart Search (SS)" << endl;
-        cout << "3. Group Sreach" << endl;
-        cout << "4. Display all movies of the same group" << endl;
-        cout << "5. Reserve" << endl;
-        cout << "6. Exit" << endl;
-        cin >> cmd;
+        choicesForUser();
     }
 }
