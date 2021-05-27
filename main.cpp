@@ -60,11 +60,29 @@ void Removemovie(){
     char s[1000] = "F:\\Cinema Project\\movies\\";
     strcat(s,name);
     strcat(s,".txt");
-    cout << s << endl;
     int status;
     status = remove(s);
     if( status == 0)cout << "Movie was successfuly removed from the list " << endl;
     else if ( status != 0)cout << "No movie matches your given movie name!!" << endl;
+}
+
+void EditMovie(){
+    int st;
+    do{
+        char name[1000];
+        cout << "Please enter the name of the movie you want to edit" << endl;
+        gets(name);
+        char s[1000] = "F:\\Cinema Project\\movies\\";
+        strcat(s, name);
+        strcat(s, ".txt");
+        int status;
+        status = remove(s);
+        st = status;
+        if ( status == 0)break;
+        else if ( status != 0)cout << "No movie matches this name. Please try again" << endl;
+    }while (  st != 0);
+    cout << "Now please enter the changed information" << endl;
+    Addmovie();
 }
 
 void adminEntry(){
@@ -162,7 +180,11 @@ void choicesForAdmin(){
         Removemovie();
         choicesForAdmin();
     }
-
+    if ( cmd == 3){
+        cin.ignore();
+        EditMovie();
+        choicesForAdmin();
+    }
     if ( cmd == 8)return;
 
 }
