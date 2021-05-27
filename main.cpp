@@ -31,6 +31,7 @@ class movie{
 
 void Addmovie(){
     FILE *ptr;
+    FILE *ptr2;
     char name[1000];
     cout << "Enter the name of the movie" << endl;
     gets(name);
@@ -43,6 +44,12 @@ void Addmovie(){
     cout << "Please specify which group(genre) this movie belongs to" << endl;
     gets(genre);
     fprintf(ptr, "%s\n",genre);
+    char w[1000] = "F:\\Cinema Project\\";
+    strcat(w,genre);
+    strcat(w, ".txt");
+    ptr2 = fopen(w,"a");
+    fprintf(ptr2, "%s\n", name);
+    fclose(ptr2);
     char director[1000];
     cout << "Please enter the name of the director" << endl;
     gets(director);
@@ -133,9 +140,45 @@ void EditMovie(){
 void DisplayAllMovies(){
     char name[1000];
     FILE * ptr;
+    int size = 0;
+    ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "a+");
+    while (!feof(ptr)){
+        fscanf(ptr, "%s", name);
+        size++;
+        if(feof(ptr))break;
+    }
+    if ( size == 1)cout << "There is no movie available" << endl;
+    fclose(ptr);
     ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "r");
     while ( ! feof(ptr)){
-        fscanf(ptr, " %[^\n]s", name);
+        fscanf(ptr, "%[^\n]s", name);
+        if (feof(ptr))break;
+        cout << name << endl;
+    }
+    fclose(ptr);
+}
+
+void DisplayMoviesofSameGenre(){
+    FILE *ptr;
+    char name[1000];
+    int size = 0;
+    char genre[1000];
+    cout << "Please choose your Genre" << endl;
+    gets(genre);
+    char s[1000] = "F:\\Cinema Project\\";
+    strcat(s, genre);
+    strcat(s, ".txt");
+    ptr = fopen(s,"a+");
+    while (!feof(ptr)){
+        fscanf(ptr, "%s", name);
+        size++;
+        if(feof(ptr))break;
+    }
+    fclose(ptr);
+    if (size == 1)cout << "There is no movie matching your criteria" << endl;
+    ptr = fopen(s,"a+");
+    while( !feof(ptr)){
+        fscanf(ptr," %[^\n]s", name);
         if (feof(ptr))break;
         cout << name << endl;
     }
@@ -246,7 +289,9 @@ void choicesForAdmin(){
         choicesForAdmin();
     }
     if ( cmd == 7){
-
+        cin.ignore();
+        DisplayMoviesofSameGenre();
+        choicesForAdmin();
     }
     if ( cmd == 8)return;
 
