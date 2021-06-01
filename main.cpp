@@ -27,6 +27,7 @@ class movie{
         char firstAct[1000];
         char secondAct[1000];
         char thirdAct[1000];
+        char reserve[1000];
 };
 
 void Addmovie(){
@@ -66,6 +67,10 @@ void Addmovie(){
     cout << "Please enter the name of the third main actor/actress of the movie" << endl;
     gets(thirdAct);
     fprintf(ptr,"%s\n",thirdAct);
+    char reserve[1000];
+    cout << "Please enter the number of seats available" << endl;
+    cin >> reserve;
+    fprintf(ptr, "%s",reserve);
     fclose(ptr);
     movie ob;
     strcpy(ob.name, name);
@@ -257,6 +262,69 @@ void adminEntry(){
     }
 }
 
+void reserveseat(){
+    FILE * baseda;
+    bool flag = false;
+    char name[1000];
+    char all[6][1000];
+    int nada=0;
+    char chosenname[1000];
+    do {
+        cout << "Enter the name of your movie" << endl;
+        gets(chosenname);
+        baseda = fopen("F:\\Cinema Project\\AllMovies.txt","r");
+        while( ! feof(baseda)){
+            fscanf(baseda, " %[^\n]s", name);
+            if ( strcmp(name, chosenname) == 0)flag = true;
+            if ( feof(baseda) )break;
+        } fclose(baseda);
+        if ( flag == false)cout << "There is no movie in the list with your given information. Please try again" << endl;
+    } while ( flag == false);
+    fclose(baseda);
+
+    char s[1000] = "F:\\Cinema Project\\movies\\";
+    strcat(s, chosenname);
+    strcat(s, ".txt");
+    baseda = fopen(s, "r");
+    char adad[1000];
+    while ( ! feof(baseda)){
+        fscanf(baseda, " %[^\n]s", adad);
+        if ( feof(baseda))break;
+        strcpy(all[nada], adad);
+        nada++;
+    }
+    string tedad;
+    int i=0;
+    while ( adad[i] != NULL){
+        i++;
+    }
+    for ( int q = 0; q < i; q++){
+        tedad = tedad + adad[q];
+    }
+    i = stoi(tedad);
+    cout << "Number of seats available is" << " " << i << endl;
+    if ( i == 0){cout << "Unfortunately there is no availabe seat " << endl; return;}
+    int hala;
+    cout << "How many seats would you like to reserve?" << endl;
+    cin >> hala;
+    while ( hala > i){
+        cout << "Please enter a valid number of seats" << endl;
+        cin >> hala;
+    }
+    i = i - hala;
+    tedad = to_string(i);
+    strcpy(adad, tedad.c_str());
+    fclose(baseda);
+    baseda = fopen(s, "w");
+    for ( int j = 0; j < nada-1; j++){
+        fprintf(baseda, "%s\n", all[j]);
+    }
+    fprintf(baseda, "%s\n", adad);
+    fclose(baseda);
+    cout << "Your reserve has been successful!" << endl;
+    return;
+}
+
 void choicesForAdmin(){
     int cmd;
     cout << "choose " << endl << endl;
@@ -303,7 +371,7 @@ void choicesForUser(){
     cout << "1. Display all movies" << endl;
     cout << "2. Smart Search (SS)" << endl;
     cout << "3. Group Sreach" << endl;
-    cout << "4. Display all movies of the same group" << endl;
+    cout << "4. Display all movies of the same group(genre)" << endl;
     cout << "5. Reserve" << endl;
     cout << "6. Exit" << endl;
     cin >> cmd;
@@ -316,7 +384,11 @@ void choicesForUser(){
         DisplayMoviesofSameGenre();
         choicesForUser();
     }
-
+    if ( cmd == 5){
+        cin.ignore();
+        reserveseat();
+        choicesForUser();
+    }
     if ( cmd == 6)return;
 }
 
