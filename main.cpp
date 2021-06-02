@@ -74,12 +74,16 @@ void Addmovie(){
     fclose(ptr);
     movie ob;
     strcpy(ob.name, name);
+    strcpy(ob.genre, genre);
     strcpy(ob.director, director);
     strcpy(ob.firstAct, firstAct);
     strcpy(ob.secondAct, secondAct);
     strcpy(ob.thirdAct, thirdAct);
     ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "a");
     fprintf(ptr, "%s\n", ob.name);
+    fclose(ptr);
+    ptr = fopen("F:\\Cinema Project\\AllGenres.txt", "a");
+    fprintf(ptr, "%s\n", ob.genre);
     fclose(ptr);
 }
 
@@ -158,7 +162,7 @@ void DisplayAllMovies(){
     while ( ! feof(ptr)){
         fscanf(ptr, " %[^\n]s", name);
         if (feof(ptr))break;
-        cout << name << endl;
+        cout << endl << name << endl;
     }
     fclose(ptr);
 }
@@ -185,7 +189,7 @@ void DisplayMoviesofSameGenre(){
     while( !feof(ptr)){
         fscanf(ptr," %[^\n]s", name);
         if (feof(ptr))break;
-        cout << name << endl;
+        cout << endl << name << endl;
     }
     fclose(ptr);
 }
@@ -325,6 +329,50 @@ void reserveseat(){
     return;
 }
 
+void GroupSearch(){
+    cout << "Please enter the genre you want to search for" << endl;
+    char name[1000];
+    char newname[1000];
+    gets(name);
+    bool flag = false;
+    FILE *ptr;
+    ptr = fopen("F:\\Cinema Project\\AllGenres.txt","r");
+    while ( !feof(ptr)){
+        fscanf(ptr," %[^\n]s", newname);
+        if ( feof(ptr))break;
+        if ( strcmp(newname, name)== 0)flag = true;
+    }
+    fclose(ptr);
+    if ( flag == false){
+        cout << endl << "No results were found!" << endl;
+        return;
+    }
+    char s[1000] = "F:\\Cinema Project\\";
+    strcat(s, name);
+    strcat(s, ".txt");
+    if ( flag == true){
+        ptr = fopen(s, "r");
+        int size = 0;
+        while ( !feof(ptr)){
+            fscanf(ptr, " %[^\n]s", newname);
+            size++;
+            if(feof(ptr))break;
+        }
+        if ( size == 1){
+            cout << "No movie is available in this particular genre" << endl;
+            fclose(ptr);
+            return;
+        }
+        ptr = fopen(s, "r");
+        while ( !feof(ptr)){
+            fscanf(ptr, " %[^\n]s", newname);
+            if ( feof(ptr))break;
+            cout << endl << newname << endl;
+        } fclose(ptr);
+    }
+
+}
+
 void choicesForAdmin(){
     int cmd;
     cout << endl <<  "choose " << endl << endl;
@@ -361,6 +409,11 @@ void choicesForAdmin(){
         DisplayMoviesofSameGenre();
         choicesForAdmin();
     }
+    if ( cmd == 6){
+        cin.ignore();
+        GroupSearch();
+        choicesForAdmin();
+    }
     if ( cmd == 8)return;
 
 }
@@ -377,6 +430,11 @@ void choicesForUser(){
     cin >> cmd;
     if( cmd == 1){
         DisplayAllMovies();
+        choicesForUser();
+    }
+    if ( cmd == 3){
+        cin.ignore();
+        GroupSearch();
         choicesForUser();
     }
     if ( cmd == 4){
