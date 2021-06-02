@@ -148,7 +148,7 @@ void DisplayAllMovies(){
     int size = 0;
     ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "a+");
     while (!feof(ptr)){
-        fscanf(ptr, "%s", name);
+        fscanf(ptr, " %[^\n]s", name);
         size++;
         if(feof(ptr))break;
     }
@@ -156,7 +156,7 @@ void DisplayAllMovies(){
     fclose(ptr);
     ptr = fopen("F:\\Cinema Project\\AllMovies.txt", "r");
     while ( ! feof(ptr)){
-        fscanf(ptr, "%[^\n]s", name);
+        fscanf(ptr, " %[^\n]s", name);
         if (feof(ptr))break;
         cout << name << endl;
     }
@@ -191,10 +191,10 @@ void DisplayMoviesofSameGenre(){
 }
 
 void adminEntry(){
-    cout << "Already have an account ?" << endl << "Yes" << endl << "No" << endl;
-    string cmd1;
-    cin >> cmd1;
-    if ( cmd1 == "Yes"){
+    cout << "Already have an account ?" << endl << "1. Yes" << endl << "2. No" << endl;
+    int cmd12;
+    cin >> cmd12;
+    if ( cmd12 == 1){
         user ob1;
         char user1name[1000];
         char pass1word[1000];
@@ -223,7 +223,7 @@ void adminEntry(){
             }
         } while( flag2 == true );
     }
-    else if ( cmd1 == "No"){
+    else if ( cmd12 == 2){
         char username[1000];
         char password[1000];
         user ob;
@@ -327,7 +327,7 @@ void reserveseat(){
 
 void choicesForAdmin(){
     int cmd;
-    cout << "choose " << endl << endl;
+    cout << endl <<  "choose " << endl << endl;
     cout << "1. Add a new movie" << endl;
     cout << "2. Remove a movie" << endl;
     cout << "3. Edit a movie" << endl;
@@ -367,7 +367,7 @@ void choicesForAdmin(){
 
 void choicesForUser(){
     int cmd;
-    cout << "choose " << endl << endl;
+    cout << endl << "choose " << endl << endl;
     cout << "1. Display all movies" << endl;
     cout << "2. Smart Search (SS)" << endl;
     cout << "3. Group Sreach" << endl;
@@ -400,10 +400,10 @@ int main(){
     cin >> cmd0;
 
     if ( cmd0 == "user"){
-        cout << "Already have an account ?" << endl << "Yes" << endl << "No" << endl;
-        string cmd1;
+        cout << "Already have an account ?" << endl << "1. Yes" << endl << "2. No" << endl;
+        int cmd1;
         cin >> cmd1;
-        if ( cmd1 == "Yes"){
+        if ( cmd1 == 1){
             user ob1;
             char user1name[1000];
             char pass1word[1000];
@@ -432,7 +432,7 @@ int main(){
                 }
             } while( flag2 == true );
         }
-        else if ( cmd1 == "No"){
+        else if ( cmd1 == 2){
             char username[1000];
             char password[1000];
             user ob;         
