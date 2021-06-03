@@ -179,7 +179,7 @@ void DisplayMoviesofSameGenre(){
     strcat(s, ".txt");
     ptr = fopen(s,"a+");
     while (!feof(ptr)){
-        fscanf(ptr, "%s", name);
+        fscanf(ptr, " %[^\n]s", name);
         size++;
         if(feof(ptr))break;
     }
@@ -373,6 +373,54 @@ void GroupSearch(){
 
 }
 
+void SS(){
+    FILE *ptr;
+    char name[1000];
+    int size = 0;
+    ptr = fopen("F:\\Cinema Project\\AllMovies.txt","r");
+    while ( !feof(ptr)){
+        fscanf(ptr, " %[^\n]s", name);
+        if ( feof(ptr))break;
+        size++;
+    }
+    fclose(ptr);
+    QVector<movie> ob;
+    ob.resize(size);
+    char newname[size][1000];
+    int i = 0;
+    ptr = fopen("F:\\Cinema Project\\AllMovies.txt","r");
+    while ( !feof(ptr)){
+        fscanf(ptr, " %[^\n]s", newname[i]);
+        if ( feof(ptr))break;
+        i++;
+    }
+    fclose(ptr);
+    int q = 0;
+    for ( int j = 0; j < i; j++){
+        char s[1000] = "F:\\Cinema project\\movies\\";
+        strcat(s, newname[q]);
+        strcat(s, ".txt");
+        ptr = fopen(s, "r");
+        int cnt = 0;
+        while ( !feof(ptr)){
+            fscanf(ptr, " %[^\n]s", name);
+            if ( cnt == 0)strcpy(ob[q].name, name);
+            if ( cnt == 1)strcpy(ob[q].genre, name);
+            if ( cnt == 2)strcpy(ob[q].director, name);
+            if ( cnt == 3)strcpy(ob[q].firstAct, name);
+            if ( cnt == 4)strcpy(ob[q].secondAct, name);
+            if ( cnt == 5)strcpy(ob[q].thirdAct, name);
+                    cnt++;
+            if ( feof(ptr)){
+                cnt = 0;
+                q++;
+                break;
+            }
+        }
+        fclose(ptr);
+    }
+}
+
 void choicesForAdmin(){
     int cmd;
     cout << endl <<  "choose " << endl << endl;
@@ -404,6 +452,11 @@ void choicesForAdmin(){
         DisplayAllMovies();
         choicesForAdmin();
     }
+    if ( cmd == 5){
+
+        SS();
+        choicesForAdmin();
+    }
     if ( cmd == 7){
         cin.ignore();
         DisplayMoviesofSameGenre();
@@ -430,6 +483,11 @@ void choicesForUser(){
     cin >> cmd;
     if( cmd == 1){
         DisplayAllMovies();
+        choicesForUser();
+    }
+    if ( cmd == 2){
+
+        SS();
         choicesForUser();
     }
     if ( cmd == 3){
