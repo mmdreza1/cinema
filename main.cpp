@@ -2,6 +2,7 @@
 #include<QMap>
 #include<QSet>
 #include<QVector>
+#include<qdebug.h>
 using namespace std;
 
 typedef long long ll ;
@@ -418,6 +419,16 @@ void SS(){
             }
         }
         fclose(ptr);
+    }
+    cout << endl << "How do you want to search?" << endl;
+    cout << "1. Search by movie's name" << endl;
+    cout << "2. Search by Director's name" << endl;
+    cout << "3. Search by the actor's name" << endl;
+    int cmd;
+    cin >> cmd;
+    if ( cmd == 1){
+        char khi[1000];
+
     }
 }
 
