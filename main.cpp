@@ -426,9 +426,29 @@ void SS(){
     cout << "3. Search by the actor's name" << endl;
     int cmd;
     cin >> cmd;
+    cin.ignore();
     if ( cmd == 1){
         char khi[1000];
-
+        cout << "Enter the name" << endl << endl;
+        gets(khi);
+        int size2;
+        size2 = strlen(khi);
+        bool superflag = false;
+        for ( int x = 0; x < size; x++ ){
+            char whatthe[1000] = {0};
+            for ( int w = 0; w < size2; w++){
+                if ( ob[x].name[w] == khi[w]){
+                    whatthe[w] = khi[w];
+                    if ( w == size2 -1 && strcmp( whatthe, khi) == 0){
+                        superflag = true;
+                        cout << ob[x].name << endl;
+                        break;
+                    }
+                }
+                if ( ob[x].name[w] != khi[w])break;
+            }
+        }
+        if ( superflag == false)cout << endl <<  "Unfortunately no movie was found!!" << endl;
     }
 }
 
