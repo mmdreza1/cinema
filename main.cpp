@@ -364,12 +364,8 @@ void GroupSearch(){
             fclose(ptr);
             return;
         }
-        ptr = fopen(s, "r");
-        while ( !feof(ptr)){
-            fscanf(ptr, " %[^\n]s", newname);
-            if ( feof(ptr))break;
-            cout << endl << newname << endl;
-        } fclose(ptr);
+        else if ( size > 1)cout << size << "  Movies were found in this genre." << endl
+                           << "Please access them in the 'Display all movies of the same genre' feature " << endl ;
     }
 
 }
@@ -431,6 +427,7 @@ void SS(){
         char khi[1000];
         cout << "Enter the name" << endl << endl;
         gets(khi);
+        cout << endl;
         int size2;
         size2 = strlen(khi);
         bool superflag = false;
@@ -450,6 +447,82 @@ void SS(){
         }
         if ( superflag == false)cout << endl <<  "Unfortunately no movie was found!!" << endl;
     }
+    if ( cmd == 2){
+        char khi[1000];
+        cout << "Enter the name" << endl << endl;
+        gets(khi);
+        cout << endl;
+        int size2;
+        size2 = strlen(khi);
+        bool superflag = false;
+        for ( int x = 0; x < size; x++ ){
+            char whatthe[1000] = {0};
+            for ( int w = 0; w < size2; w++){
+                if ( ob[x].director[w] == khi[w]){
+                    whatthe[w] = khi[w];
+                    if ( w == size2 -1 && strcmp( whatthe, khi) == 0){
+                        superflag = true;
+                        cout << ob[x].name << endl;
+                        break;
+                    }
+                }
+                if ( ob[x].director[w] != khi[w])break;
+            }
+        }
+        if ( superflag == false)cout << endl <<  "Unfortunately no movie was found!!" << endl;
+    }
+    if ( cmd == 3){
+        char khi[1000];
+        cout << "Enter the name" << endl << endl;
+        gets(khi);
+        cout << endl;
+        int size2;
+        size2 = strlen(khi);
+        bool superflag = false;
+        for ( int x = 0; x < size; x++ ){
+            char whatthe[1000] = {0};
+            for ( int w = 0; w < size2; w++){
+                if ( ob[x].firstAct[w] == khi[w]){
+                    whatthe[w] = khi[w];
+                    if ( w == size2 -1 && strcmp( whatthe, khi) == 0){
+                        superflag = true;
+                        cout << ob[x].name << endl;
+                        break;
+                    }
+                }
+                if ( ob[x].firstAct[w] != khi[w])break;
+            }
+        }
+        for ( int x = 0; x < size; x++ ){
+            char whatthe[1000] = {0};
+            for ( int w = 0; w < size2; w++){
+                if ( ob[x].secondAct[w] == khi[w]){
+                    whatthe[w] = khi[w];
+                    if ( w == size2 -1 && strcmp( whatthe, khi) == 0){
+                        superflag = true;
+                        cout << ob[x].name << endl;
+                        break;
+                    }
+                }
+                if ( ob[x].secondAct[w] != khi[w])break;
+            }
+        }
+        for ( int x = 0; x < size; x++ ){
+            char whatthe[1000] = {0};
+            for ( int w = 0; w < size2; w++){
+                if ( ob[x].thirdAct[w] == khi[w]){
+                    whatthe[w] = khi[w];
+                    if ( w == size2 -1 && strcmp( whatthe, khi) == 0){
+                        superflag = true;
+                        cout << ob[x].name << endl;
+                        break;
+                    }
+                }
+                if ( ob[x].thirdAct[w] != khi[w])break;
+            }
+        }
+        if ( superflag == false)cout << endl <<  "Unfortunately no movie was found!!" << endl;
+    }
 }
 
 void choicesForAdmin(){
@@ -461,7 +534,7 @@ void choicesForAdmin(){
     cout << "4. Display all movies" << endl;
     cout << "5. Smart Search (SS)" << endl;
     cout << "6. Group Sreach" << endl;
-    cout << "7. Display all movies of the same group" << endl;
+    cout << "7. Display all movies of the same genre" << endl;
     cout << "8. Exit" << endl;
     cin  >> cmd;
     if( cmd == 1){
@@ -484,7 +557,6 @@ void choicesForAdmin(){
         choicesForAdmin();
     }
     if ( cmd == 5){
-
         SS();
         choicesForAdmin();
     }
@@ -508,7 +580,7 @@ void choicesForUser(){
     cout << "1. Display all movies" << endl;
     cout << "2. Smart Search (SS)" << endl;
     cout << "3. Group Sreach" << endl;
-    cout << "4. Display all movies of the same group(genre)" << endl;
+    cout << "4. Display all movies of the same genre" << endl;
     cout << "5. Reserve" << endl;
     cout << "6. Exit" << endl;
     cin >> cmd;
@@ -517,7 +589,6 @@ void choicesForUser(){
         choicesForUser();
     }
     if ( cmd == 2){
-
         SS();
         choicesForUser();
     }
